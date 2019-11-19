@@ -1,45 +1,25 @@
 import random
 
+from pygame.rect import Rect
+
+from simulator import simulator
 from simulator.trafficlights import RED
 
+CAR_RECT = Rect(0, 0, 20, 10)
 
 class Car:
-    def __init__(self, thinker, streetId, pos, map):
-        self.thinker = thinker
-        self.pos = pos
+    def __init__(self, simulator, thinker, streetId, position, map):
+        self.thinker = thinker((lambda: simulator.getBundleForCar(self, streetId)))
+        self.position = position
         self.map = map
         self.streetId = streetId
         self.direction = self.map.streets[self.streetId].getDefaultVector()
 
-    def step(self, deltaTime):
-        self.thinker.step(deltaTime)
+        self.rect = CAR_RECT.copy()
+        self.rect.center = position.x, position.y
 
-        movementVector = self.map.streets[self.streetId].getVector(self.direction)
-        movementVector.scale_to_length(deltaTime*self.thinker.getVelocity())
+    def step(self, timeDelta):
+        self.thinker.step(timeDelta)
+        self.position = self.position + self.thinker.getVelocity() * timeDelta
 
-        nextIntersectionCenter = self.map.streets[self.streetId].getIntersection(movementVector)
-
-        if movementVector.length() < self.pos.distance_to(nextIntersectionCenter):
-            self.pos = self.pos + movementVector
-        else:
-            nextIntersectionId = self.map.streets[self.streetId].getIntersectionId(movementVector)
-            nextIds = self.map.getNextIds(nextIntersectionId)
-
-            nextIntersectionTrafficLight = self.map.getTrafficLightById(nextIntersectionId)
-            if nextIntersectionTrafficLight is not None and nextIntersectionTrafficLight.getState() == RED:
-                self.pos = self.pos
-            elif not nextIds:
-                self.pos = nextIntersectionCenter
-            else:
-                movementDistance = movementVector.length()
-                movementDistance -= self.pos.distance_to(nextIntersectionCenter)
-
-                nextStreetId = random.choice(self.map.getNextIds(nextIntersectionId))
-                nextStreet = self.map.streets[nextStreetId]
-
-                self.streetId = nextStreetId
-                self.direction = (nextStreet.getDefaultVector()) if (nextStreet.startId == nextIntersectionId) else nextStreet.getDefaultVector().rotate(180)
-
-                streetVector = self.direction
-                streetVector.scale_to_length(movementDistance)
-                self.pos = nextStreet.start + streetVector
+        self.rect.center = self.position.x, self.position.y

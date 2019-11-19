@@ -5,7 +5,7 @@ from pygame.rect import Rect
 import simulator
 from simulator.simulator import Simulator
 from simulator.trafficlights import TrafficLight, YELLOW
-from thinker import Thinker
+from simulator.thinkers.thinker import Thinker
 from utils import vec, toPairI, scale
 
 WIDTH = 700
@@ -42,8 +42,8 @@ if __name__ == '__main__':
         (vec(70, 200), 1, 4)
     ])
 
-    SIMULATOR.createCar(Thinker(), 0)
-    SIMULATOR.createCar(Thinker(), 1)
+    SIMULATOR.createCar(Thinker, 0)
+    SIMULATOR.createCar(Thinker, 1)
 
     # initialize pygame and create window
     pygame.init()
@@ -70,17 +70,8 @@ if __name__ == '__main__':
 
         screen.fill(BLACK)
 
-        transparent_surface.fill((0, 0, 0, 255))
-
-        for carPos in SIMULATOR.getCarPositions():
-            rect = CAR_RECT.copy()
-            rect.center = carPos.x, carPos.y
-            #pygame.draw.circle(transparent_surface, (143, 235, 52, 20), toPairI(carPos), 20)
-
-        screen.blit(transparent_surface, (0, 0), special_flags=pygame.BLEND_RGBA_ADD)
-
         for street in SIMULATOR.map.streets:
-            pygame.draw.line(screen, WHITE, toPairI(street.start), toPairI(street.end), 1)
+            pygame.draw.polygon(screen, WHITE, [street.topLeft, street.topRight, street.bottomRight, street.bottomLeft], 3)
 
         for street in SIMULATOR.map.streets:
             middlePoint = (street.start + street.end)/2
@@ -110,10 +101,15 @@ if __name__ == '__main__':
             pygame.draw.circle(screen, (100, 255, 50), toPairI(sourceNode.position), 5)
             pygame.draw.circle(screen, (255, 0, 0), toPairI(sourceNode.position), 2)
 
-        for carPos in SIMULATOR.getCarPositions():
-            rect = CAR_RECT.copy()
-            rect.center = carPos.x, carPos.y
-            pygame.draw.rect(screen, RED, rect)
+        for carRect in SIMULATOR.getCarRects():
+            pygame.draw.rect(screen, RED, carRect)
+
+        def showCarVisuals(car):
+            carPos = car.position
+            pygame.draw.line(screen, WHITE, carPos, carPos + car.thinker.getVelocity())
+
+            pygame.draw.circle(screen, (143, 235, 52), toPairI(carPos), car.thinker.visionDistance, 1)
+        showCarVisuals(SIMULATOR.cars[0])
 
         pygame.display.flip()
 

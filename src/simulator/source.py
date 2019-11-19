@@ -1,5 +1,5 @@
-from thinker import Thinker
-from utils import shortest_dist_to_point
+from simulator.thinkers.thinker import Thinker
+from utils import nearest_point_on_line
 
 
 class SourceNode:
@@ -19,4 +19,4 @@ class SourceNode:
 
             street = self.simulator.map.streets[self.streetId]
 
-            self.simulator.createCarInPosition(Thinker(), self.streetId, shortest_dist_to_point(street.start, street.end, self.position))
+            self.simulator.createCarInPosition(Thinker, self.streetId, nearest_point_on_line(street.start, street.end, self.position))

@@ -1,14 +1,27 @@
 from math import hypot
 
-from utils import vec
+from utils import vec, scale
 
 
 class Street:
-    def __init__(self, start, startId, end, endId):
-        self.start = start
+    def __init__(self, centerStart, startId, centerEnd, endId, width, lanes):
+        self.start = centerStart
         self.startId = startId
-        self.end = end
+        self.end = centerEnd
         self.endId = endId
+
+        self.directionVector = centerEnd - centerStart
+        self.length = centerStart.distance_to(centerEnd)
+        self.width = width
+
+        halfWidth = width/2
+
+        self.upDirectionVector = self.directionVector.rotate(-90)
+        self.downDirectionVector = self.directionVector.rotate(90)
+        self.topLeft = centerStart + scale(self.upDirectionVector, halfWidth)
+        self.topRight = centerEnd + scale(self.upDirectionVector, halfWidth)
+        self.bottomRight = centerEnd + scale(self.downDirectionVector, halfWidth)
+        self.bottomLeft = centerStart + scale(self.downDirectionVector, halfWidth)
 
         self.defaultVector = vec(self.end.x - self.start.x, self.end.y - self.start.y).normalize()
 
