@@ -1,10 +1,8 @@
 import pygame
 from pygame.constants import K_SPACE
-from pygame.math import Vector2
 from pygame.rect import Rect
 
-from simulator import Simulator, Map, TrafficLight
-import simulator
+from simulator.simulator import Simulator, TrafficLight, YELLOW
 from thinker import Thinker
 from utils import vec, toPairI, scale
 
@@ -95,9 +93,9 @@ if __name__ == '__main__':
 
         for (intersectionId, light) in SIMULATOR.map.trafficLightsByIntersectionId.items():
             state = light.getState()
-            if state == simulator.RED:
+            if state == RED:
                 color = RED
-            elif state == simulator.YELLOW:
+            elif state == YELLOW:
                 color = (255, 255, 0)
             else:
                 color = GREEN
