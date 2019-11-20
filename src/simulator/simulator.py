@@ -41,21 +41,15 @@ class Simulator:
         for sourceNode in self.map.sourceNodes:
             sourceNode.step(deltaTime)
 
-    def getCarRects(self):
+    def getCarPolygons(self):
         for car in self.cars:
-            yield car.rect
+            yield car.polygon
 
     def getBundleForCar(self, car, streetId):
         street = self.map.streets[streetId]
 
-        distanceToLaneEndLeft = min(dist_to_point(street.topLeft, street.topRight, Vector2(car.rect.topleft)),
-                                    dist_to_point(street.topLeft, street.topRight, Vector2(car.rect.topright)),
-                                    dist_to_point(street.topLeft, street.topRight, Vector2(car.rect.bottomleft)),
-                                    dist_to_point(street.topLeft, street.topRight, Vector2(car.rect.bottomright)))
+        distanceToLaneEndLeft = min([dist_to_point(street.topLeft, street.topRight, point) for point in car.polygon])
 
-        distanceToLaneEndRight = min(dist_to_point(street.bottomLeft, street.bottomRight, Vector2(car.rect.topleft)),
-                                     dist_to_point(street.bottomLeft, street.bottomRight, Vector2(car.rect.topright)),
-                                     dist_to_point(street.bottomLeft, street.bottomRight, Vector2(car.rect.bottomleft)),
-                                     dist_to_point(street.bottomLeft, street.bottomRight, Vector2(car.rect.bottomright)))
+        distanceToLaneEndRight = min([dist_to_point(street.bottomLeft, street.bottomRight, point) for point in car.polygon])
 
         return thinker.AmbientDataBundle(street.directionVector, street.upDirectionVector, street.downDirectionVector, distanceToLaneEndLeft, distanceToLaneEndRight)

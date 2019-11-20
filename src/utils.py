@@ -1,5 +1,6 @@
 from pygame.math import Vector2
 
+
 def vec(x, y):
     v = Vector2()
     v.xy = x, y

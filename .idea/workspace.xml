@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf311e9d-122b-47f0-879d-dc047ed5ed30" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/simulator/thinkers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/simulator/thinkers/thinker.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/polygon.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulator/intersection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simulator/car.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulator/car.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/simulator/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulator/simulator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulator/source.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulator/source.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulator/street.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulator/street.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thinker.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -120,7 +117,9 @@
       <workItem from="1572728229456" duration="3785000" />
       <workItem from="1573080875244" duration="103000" />
       <workItem from="1574186040799" duration="2027000" />
-      <workItem from="1574188076310" duration="819000" />
+      <workItem from="1574188076310" duration="1165000" />
+      <workItem from="1574202975866" duration="1540000" />
+      <workItem from="1574269280256" duration="3664000" />
     </task>
     <servers />
   </component>
@@ -141,14 +140,24 @@
     </option>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/simulator/car.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="self.pos" language="Python" />
-        <watch expression="nextIntersectionTrafficLight.get" language="Python" />
+        <watch expression="polygon.getPrintable()" language="Python" />
+        <watch expression="difPos.angle_to(vec(0, 1))" language="Python" />
+        <watch expression="difPos.normalize()" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/trafficsim$main.coverage" NAME="main Coverage Results" MODIFIED="1574188793142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/trafficsim$main.coverage" NAME="main Coverage Results" MODIFIED="1574281828023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -101,8 +101,8 @@ if __name__ == '__main__':
             pygame.draw.circle(screen, (100, 255, 50), toPairI(sourceNode.position), 5)
             pygame.draw.circle(screen, (255, 0, 0), toPairI(sourceNode.position), 2)
 
-        for carRect in SIMULATOR.getCarRects():
-            pygame.draw.rect(screen, RED, carRect)
+        for polygon in SIMULATOR.getCarPolygons():
+            pygame.draw.polygon(screen, RED, polygon.getPrintable())
 
         def showCarVisuals(car):
             carPos = car.position
